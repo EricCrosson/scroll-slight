@@ -34,8 +34,13 @@
 
 (defcustom scroll-slight-amount 6
   "The number of lines to shift in `scroll-slight-up' and
-`scroll-slight-down'."
-  :type    'integer
+`scroll-slight-down'.
+
+If `scroll-slight-amount' is an integerp, that integer is used
+for both up and down scrolling. If `scroll-slight-amount' is a
+cons, the car is used for the amount to scroll up and the cdr is
+used for the amount to scroll down."
+  :type    '(integer)
   :options '(5 6)
   :group   'scroll-slight)
 
@@ -44,16 +49,22 @@
   "Scroll the buffer upwards by `scroll-slight-amount' N
 times. This command does not move point."
   (interactive)
-  (dotimes (i (or n 1))
-    (scroll-up scroll-slight-amount)))
+  (let ((scroll-slight-up-amount (if (consp scroll-slight-amount)
+				     (car scroll-slight-amount)
+				   scroll-slight-amount)))
+    (dotimes (i (or n 1))
+      (scroll-up scroll-slight-up-amount))))
 
 ;;;###autoload
 (defun scroll-slight-down (&optional n)
   "Scroll the buffer downwards by `scroll-slight-amount' N
 times. This command does not move point."
   (interactive)
-  (dotimes (i (or n 1))
-    (scroll-down scroll-slight-amount)))
+  (let ((scroll-slight-down-amount (if (consp scroll-slight-amount)
+				     (cdr scroll-slight-amount)
+				   scroll-slight-amount)))
+    (dotimes (i (or n 1))
+      (scroll-down scroll-slight-down-amount))))
 
 (provide 'scroll-slight)
 
