@@ -44,27 +44,42 @@ used for the amount to scroll down."
   :options '(5 6)
   :group   'scroll-slight)
 
+(defun scroll-slight-up-amount ()
+  "Determine the amount to scroll up in `scroll-slight-up'
+based on the value of `scroll-slight-amount.' See the
+documentation of `scroll-slight-amount' for more information."
+  (if (consp scroll-slight-amount)
+      (car scroll-slight-amount)
+    scroll-slight-amount))
+
+(defun scroll-slight-down-amount ()
+  "Determine the amount to scroll down in `scroll-slight-down'
+based on the value of `scroll-slight-amount.' See the
+documentation of `scroll-slight-amount' for more information."
+  (if (consp scroll-slight-amount)
+      (cdr scroll-slight-amount)
+    scroll-slight-amount))
+
+(defun scroll-slight-scroll-fn (direction &optional n)
+  "Scroll the buffer in DIRECTION the amount of lines specified
+by `scroll-slight-amount' N times."
+  (dotimes (i (or n 1))
+    (cond ((eq direction :up) (scroll-up (scroll-slight-up-amount)))
+	  ((eq direction :down) (scroll-down (scroll-slight-down-amount))))))
+
 ;;;###autoload
 (defun scroll-slight-up (&optional n)
   "Scroll the buffer upwards by `scroll-slight-amount' N
 times. This command does not move point."
   (interactive)
-  (let ((scroll-slight-up-amount (if (consp scroll-slight-amount)
-				     (car scroll-slight-amount)
-				   scroll-slight-amount)))
-    (dotimes (i (or n 1))
-      (scroll-up scroll-slight-up-amount))))
+  (scroll-slight-scroll-fn :up n))
 
 ;;;###autoload
 (defun scroll-slight-down (&optional n)
   "Scroll the buffer downwards by `scroll-slight-amount' N
 times. This command does not move point."
   (interactive)
-  (let ((scroll-slight-down-amount (if (consp scroll-slight-amount)
-				     (cdr scroll-slight-amount)
-				   scroll-slight-amount)))
-    (dotimes (i (or n 1))
-      (scroll-down scroll-slight-down-amount))))
+  (scroll-slight-scroll-fn :down n))
 
 (provide 'scroll-slight)
 
