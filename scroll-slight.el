@@ -1,11 +1,11 @@
 ;;; scroll-slight.el --- Scroll the buffer slightly up or down
-;; Version: 0.0.20140227
+;; Version: 0.0.20140327
 
 ;; Copyright (C) 2015 Eric Crosson
 
 ;; Author: Eric Crosson <esc@ericcrosson.com>
 ;; Keywords: scroll
-;; Package-Version: 0
+;; Package-Version: 0.1
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
