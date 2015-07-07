@@ -1,4 +1,4 @@
-# scroll-slight
+# scroll-slight [![GNU GPL](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 ---
 
 Scroll GNU Emacs buffers slightly up or down. The number of lines to
